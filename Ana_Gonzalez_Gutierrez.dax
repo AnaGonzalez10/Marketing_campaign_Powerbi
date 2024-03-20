@@ -1,0 +1,40 @@
+﻿DEFINE 
+---- MODEL MEASURES BEGIN ----
+MEASURE dax_medidas[aceptacion campaña 1] = COUNTROWS(FILTER('marketing_campaign', 'marketing_campaign'[Campaña 1] = "Aceptado"))
+MEASURE dax_medidas[aceptacion campaña 2] = COUNTROWS(FILTER('marketing_campaign', 'marketing_campaign'[Campaña 2] = "Aceptado"))
+MEASURE dax_medidas[aceptacion campaña 3] = COUNTROWS(FILTER('marketing_campaign', 'marketing_campaign'[Campaña 3] = "Aceptado"))
+MEASURE dax_medidas[aceptacion campaña 4] = COUNTROWS(FILTER('marketing_campaign', 'marketing_campaign'[Campaña 4] = "Aceptado"))
+MEASURE dax_medidas[aceptacion campaña 5] = COUNTROWS(FILTER('marketing_campaign', 'marketing_campaign'[Campaña 5] = "Aceptado"))
+MEASURE dax_medidas[Aceptación Ultima Campaña] = COUNTROWS(FILTER('marketing_campaign', 'marketing_campaign'[respuesta_ultima_camapaña] = "Aceptado"))
+
+MEASURE dax_medidas[ingreso medio clientes] = AVERAGE(marketing_campaign[Ingresos])
+MEASURE dax_medidas[media_edad] = AVERAGE('marketing_campaign'[edad2]) 
+MEASURE dax_medidas[porcentaje_venta_carne] = (DIVIDE(SUM('marketing_campaign'[carne]) * 100, [Total de compras producto]))
+MEASURE dax_medidas[porcentaje_venta_dulces] = (DIVIDE(SUM('marketing_campaign'[dulces]) * 100, [Total de compras producto]))
+MEASURE dax_medidas[porcentaje_venta_fruta] = (DIVIDE(SUM('marketing_campaign'[frutas]) * 100, [Total de compras producto]))
+MEASURE dax_medidas[porcentaje_venta_oro] = (DIVIDE(SUM('marketing_campaign'[oro]) * 100, [Total de compras producto]))
+MEASURE dax_medidas[porcentaje_venta_pescado] = (DIVIDE(SUM('marketing_campaign'[pescado]) * 100, [Total de compras producto]))
+MEASURE dax_medidas[porcentaje_venta_vino] = (DIVIDE(SUM('marketing_campaign'[vinos]) * 100, [Total de compras producto]))
+MEASURE dax_medidas[Total Campañas Aceptadas] = [aceptacion campaña 1] + [aceptacion campaña 2] + [aceptacion campaña 3] + [aceptacion campaña 4] + [aceptacion campaña 5] + [Aceptación Ultima Campaña]
+
+MEASURE dax_medidas[Total Carne] = SUMX('marketing_campaign', 'marketing_campaign'[carne])
+MEASURE dax_medidas[Total clientes] = COUNTROWS(marketing_campaign)
+MEASURE dax_medidas[Total de compras producto] = 
+    SUMX(
+        'marketing_campaign',
+        'marketing_campaign'[vinos] +
+        'marketing_campaign'[frutas] +
+        'marketing_campaign'[Carne] +
+        'marketing_campaign'[dulces] +
+        'marketing_campaign'[oro] +
+        'marketing_campaign'[pescado]
+    )
+
+MEASURE dax_medidas[Total dulce] = SUMX('marketing_campaign', 'marketing_campaign'[dulces])
+MEASURE dax_medidas[Total fruta] = SUMX('marketing_campaign', 'marketing_campaign'[frutas])
+MEASURE dax_medidas[Total oro] = SUMX('marketing_campaign', 'marketing_campaign'[oro])
+MEASURE dax_medidas[Total pescado] = SUMX('marketing_campaign', 'marketing_campaign'[pescado])
+MEASURE dax_medidas[total quejas] = COUNTROWS(FILTER('marketing_campaign', 'marketing_campaign'[quejas] = "Si"))
+MEASURE dax_medidas[Total vino] = SUMX('marketing_campaign', 'marketing_campaign'[vinos])
+---- MODEL MEASURES END ----
+
